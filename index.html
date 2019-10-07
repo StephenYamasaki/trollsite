@@ -1,0 +1,113 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel ="stylesheet" href="styles.css">
+    <style></style>
+</head>
+<body>
+    <div id="app">
+        <h1>Cool Animal Photos</h1>
+        <h3>By: Stephen</h3>
+        <img src="/images/bird.jpg">
+        <br>
+        <a  id="back1" v-bind:style="back1Style" href="404.html">Next</a>
+        <a id="next" v-bind:style="nextStyle" href="page_2.html">Next</a>
+        <a id="back2" v-bind:style="back2Style" href="404.html">Next</a>
+        <p>It's ok to feel afraid</p> 
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                nextStyle: {
+                    position:"absolute",
+                    right: "10%",
+                    top: "10%"
+                },
+                nextPosition:70,
+                nextMovingLeft:true,
+                back1Style: {
+                    position:"absolute",
+                    left: "30%",
+                    top: "10%"
+                },
+                back1Position:10,
+                backMovingUp:false,
+                back2Style: {
+                    position:"absolute",
+                    right: "70%",
+                    top: "70%"
+                },
+                back2PositionX:70,
+                back2PositionY:70,
+                back2Up:true,
+                back2Left:false,
+            },
+            methods: {
+                move: function() {
+                    this.nextMove();
+                    this.back1Move();
+                },
+                nextMove: function() {
+                    if(this.nextPosition<10||this.nextPosition>=90)
+                    {
+                        this.nextMovingLeft=!this.nextMovingLeft;
+                    }
+                    if(this.nextMovingLeft)
+                    {
+                        this.nextStyle.right = (this.nextPosition + .5) + "%";
+                        this.nextPosition+=.5;
+                    }
+                    else 
+                    {
+                        this.nextStyle.right = (this.nextPosition - .5) + "%";
+                        this.nextPosition-=.5;
+                    }
+                },
+                back1Move: function() {
+                    if(this.back1Position<10||this.back1Position>=100)
+                    {
+                        this.back1MovingUp=!this.back1MovingUp;
+                    }
+                    if(this.back1MovingUp)
+                    {
+                        this.back1Style.top = (this.back1Position + .5) + "%";
+                        this.back1Position+=.5;
+                    }
+                    else 
+                    {
+                        this.back1Style.top = (this.back1Position - .5) + "%";
+                        this.back1Position-=.5;
+                    }
+                },
+                back2Move: function() {
+                    if(this.back2PositionY<10||this.back2PositionY>=110)
+                    {
+                        this.back2Up=!this.back2Up;
+                    }
+                    if(this.back1MovingUp)
+                    {
+                        this.back1Style.top = (this.back1Position + .5) + "%";
+                        this.back1Position+=.5;
+                    }
+                    else 
+                    {
+                        this.back1Style.top = (this.back1Position - .5) + "%";
+                        this.back1Position-=.5;
+                    }
+                },
+                onLoad: function() {
+                    setInterval(
+                        this.move,
+                        30
+                    )
+                }
+
+            },
+            created: function() {
+                this.onLoad();
+            }
+        })
+    </script>
+</body>
+</html>

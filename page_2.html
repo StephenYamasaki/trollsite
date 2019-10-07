@@ -1,0 +1,72 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel ="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Cool Animal Photos</h1>
+        <h3>By: Stephen</h3>
+        <img src="/images/owl.jpg">
+        <br>
+        <p><span class="red">{{this.redText}}</span>{{this.notRed}}</p>
+        <button v-on:click=increase>Next</button>
+        <a class="hidden" href="page_3.html"></a>
+    </div>
+    <script>
+            var app = new Vue({
+                el: "#app",
+                data:{
+                    clicks:0,
+                    text: "Practice makes perfect",
+                    redText: "",
+                    notRed: "",
+                    protection: 0
+                },
+                methods: {
+                    textColor: function(){
+                        if(this.clicks>=0&&this.clicks<this.text.length)
+                        {
+                            this.redText=this.text.substring(0,this.clicks);
+                            this.notRed=this.text.substring(this.clicks,this.text.length);
+                            console.log("colored");
+                        }
+                    },
+                    increase: function() {
+                        this.clicks +=2;
+                        this.protection +=1;
+                        this.textColor();
+                        if(this.clicks>=this.text.length)
+                        {
+                            window.location.href = "page_3.html";
+                        } 
+                    },
+                    reduce: function() {
+                        if(this.protection>0)
+                        {
+                            this.protection--; 
+                        }
+                        else 
+                            if(this.clicks>=1)
+                            {
+                            this.clicks-=2;
+                            this.textColor();
+                            console.log(this.clicks+"reduce");
+                            }  
+                            console.log("protection reduced to: " + this.protection);
+                    },
+                    onLoad: function() {
+                    setInterval(
+                        this.reduce,
+                        300
+                    )
+                    }
+                },
+                created: function() {
+                    this.onLoad();
+                    this.textColor();
+                }
+            })
+        </script>
+</body>
+</html>

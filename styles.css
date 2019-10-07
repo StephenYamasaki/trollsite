@@ -1,0 +1,32 @@
+h1 {
+    color:green;
+}
+#app {
+    text-align:center;
+    position:relative;
+}
+img {
+    width: 50%;
+    max-width:800px;
+}
+a {
+    background-color: red;
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+}
+.hidden {
+    display:none;
+}
+button{
+    background-color: red;
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    border: none;
+}
+.red {
+    color:red;
+}

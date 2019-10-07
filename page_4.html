@@ -1,0 +1,34 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel ="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Cool Animal Photos</h1>
+        <h3>By: Stephen</h3>
+        <img  src="/images/hummingbird.jpg">
+        <p>Moving that fast is a lot of work</p>
+        <button>Next</button>
+    </div>
+    <script>
+            var app = new Vue({
+                el: "#app",
+                data:{
+                },
+                methods: {
+                    progress: function() {
+                        window.location.href = 'index.html'
+                    },
+                    onLoad: function() {
+                    setInterval(
+                        300
+                    )
+                    }
+                },
+                created: function() {
+                }
+            })
+        </script>
+</body>
+</html>
