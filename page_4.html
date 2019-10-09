@@ -9,26 +9,43 @@
         <h3>By: Stephen</h3>
         <img  src="/images/hummingbird.jpg">
         <p>Moving that fast is a lot of work</p>
-        <button>Next</button>
-    </div>
+        <p>{{this.mouseFast}} X:{{this.mouseCurrentX}} Y:{{this.mouseCurrentY}}</p>
+     </div>     
     <script>
-            var app = new Vue({
-                el: "#app",
-                data:{
-                },
-                methods: {
-                    progress: function() {
-                        window.location.href = 'index.html'
-                    },
-                    onLoad: function() {
-                    setInterval(
-                        300
-                    )
+        var app = new Vue({
+            el: "#app",
+            data:{
+                mouseCurrentX: 100,
+                mouseCurrentY: 100,
+                mousePastX: 0,
+                mousePastY:0,
+                mouseFast: false,
+            },
+            methods: {
+                mouseTrack: function(){
+                    this.mouseCurrentX=screenX;
+                    this.mouseCurrentY=screenY;
+                    if(this.mouseCurrentX-this.mousePastX>100||this.mouseCurrentY-this.mousePastY>100)
+                    {
+                        mouseFast=true;
                     }
+                    this.mousePastX=this.mouseCurrentX;
+                    this.mousePastY=this.mouseCurrentY;
                 },
-                created: function() {
+                progress: function() {
+                    window.location.href = 'index.html'
+                },
+                onLoad: function() {
+                setInterval(
+                    this.mouseTrack,
+                    20
+                )
                 }
-            })
-        </script>
+            },
+            created: function() {
+                this.onLoad();
+            }
+        })
+    </script>
 </body>
 </html>
