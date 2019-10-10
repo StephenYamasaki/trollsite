@@ -1,15 +1,31 @@
 <html>
+<style>
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+}
+
+#myBar {
+  width: 1%;
+  height: 30px;
+  background-color: #4CAF50;
+}
+</style>
 <head>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel ="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app">
+    <div id="app" @mouseenter='mouseEnter' @mouseleave='mouseLeave'>
         <h1>Cool Animal Photos</h1>
         <h3>By: Stephen</h3>
         <img  src="/images/hummingbird.jpg">
-        <p>Moving that fast is a lot of work</p>
-        <p>{{this.mouseFast}} X:{{this.mouseCurrentX}} Y:{{this.mouseCurrentY}}</p>
+        <div id="myProgress">
+            <div id="myBar"></div>
+          </div>
+        <p>Moving that fast is a lot of work Activated:{{solved}}</p>
+        <p>{{this.fastCooldown}} X:{{this.mouseCurrentX}} Y:{{this.mouseCurrentY}}<br>PX:{{this.mousePastX}} PY:{{this.mousePastY}}</p>
+        <p>{{Math.abs(this.mouseCurrentX-this.mousePastX)}} {{Math.abs(this.mouseCurrentY-this.mousePastY)}}</p>
      </div>     
     <script>
         var app = new Vue({
@@ -19,18 +35,49 @@
                 mouseCurrentY: 100,
                 mousePastX: 0,
                 mousePastY:0,
-                mouseFast: false,
+                fastCooldown: 0,
+                solved: false,
+                barWidth: 0,
             },
             methods: {
+                mouseEnter: function () {
+                this.$el.addEventListener('mousemove', this.mouseMove, false);
+                },
+                mouseLeave: function() {
+                this.$el.removeEventListener('mousemove', this.mouseMove);
+                },
+                mouseMove: function(event) {
+                    this.mouseCurrentX = event.clientX;
+                    this.mouseCurrentY = event.clientY;
+                },
                 mouseTrack: function(){
-                    this.mouseCurrentX=screenX;
-                    this.mouseCurrentY=screenY;
-                    if(this.mouseCurrentX-this.mousePastX>100||this.mouseCurrentY-this.mousePastY>100)
+                    var speedX = Math.abs(this.mouseCurrentX-this.mousePastX);
+                    var speedY = Math.abs(this.mouseCurrentY-this.mousePastY)
+                    if((speedX>10&&speedX<40)||(speedY>10&&speedY<40))
                     {
-                        mouseFast=true;
+                        this.fastCooldown++;
+                        if(this.fastCooldown>20)
+                        {
+                            this.solved= true
+                        }
+                    }
+                    else{
+                        if(this.fastCooldown>0)
+                            this.fastCooldown-=5;
                     }
                     this.mousePastX=this.mouseCurrentX;
                     this.mousePastY=this.mouseCurrentY;
+                },
+                barMove: function(){
+                    var elem = document.getElementById("myBar");   
+                    var id = setInterval(frame, 10);
+                    function frame() {
+                        if (barWidth >= 100) {
+                        clearInterval(id);
+                        } else {
+                        elem.style.width = barWidth + '%'; 
+                        }
+                    }
                 },
                 progress: function() {
                     window.location.href = 'index.html'
@@ -38,7 +85,7 @@
                 onLoad: function() {
                 setInterval(
                     this.mouseTrack,
-                    20
+                    200
                 )
                 }
             },
