@@ -29,7 +29,6 @@
                         {
                             this.redText=this.text.substring(0,this.clicks);
                             this.notRed=this.text.substring(this.clicks,this.text.length);
-                            console.log("colored");
                         }
                     },
                     increase: function() {
@@ -51,9 +50,7 @@
                             {
                             this.clicks-=2;
                             this.textColor();
-                            console.log(this.clicks+"reduce");
                             }  
-                            console.log("protection reduced to: " + this.protection);
                     },
                     onLoad: function() {
                     setInterval(

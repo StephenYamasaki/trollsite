@@ -26,6 +26,7 @@
         <p>Moving that fast is a lot of work Activated:{{solved}}</p>
         <p>{{this.fastCooldown}} X:{{this.mouseCurrentX}} Y:{{this.mouseCurrentY}}<br>PX:{{this.mousePastX}} PY:{{this.mousePastY}}</p>
         <p>{{Math.abs(this.mouseCurrentX-this.mousePastX)}} {{Math.abs(this.mouseCurrentY-this.mousePastY)}}</p>
+        <p>Bar Width: {{barWidth}}</p>
      </div>     
     <script>
         var app = new Vue({
@@ -37,7 +38,7 @@
                 mousePastY:0,
                 fastCooldown: 0,
                 solved: false,
-                barWidth: 0,
+                barWidth: 50,
             },
             methods: {
                 mouseEnter: function () {
@@ -50,34 +51,40 @@
                     this.mouseCurrentX = event.clientX;
                     this.mouseCurrentY = event.clientY;
                 },
-                mouseTrack: function(){
+                // barChange: function() {
+                //     if(this.fastCooldown<=100&&this.fastCooldown>=0)
+                //         {
+                //             this.barWidth = this.fastCooldown/20;
+                //         }
+                //     else if (this.fastCooldownh<0) {
+                //         this.barWidth = 0;
+                //     }
+                //     else {
+                //         this.barWidth = 100;
+                //     }
+                // },
+                mouseTrack: function() {
+                    this.barMove();
                     var speedX = Math.abs(this.mouseCurrentX-this.mousePastX);
-                    var speedY = Math.abs(this.mouseCurrentY-this.mousePastY)
-                    if((speedX>10&&speedX<40)||(speedY>10&&speedY<40))
-                    {
-                        this.fastCooldown++;
-                        if(this.fastCooldown>20)
-                        {
-                            this.solved= true
-                        }
+                    var speedY = Math.abs(this.mouseCurrentY-this.mousePastY);
+                    // if((speedX>10&&speedX<40)||(speedY>10&&speedY<40)) {
+                    if((speedX>10)||(speedY>10)) {    
+                        this.fastCooldown+=2;
+                        // this.barMove();
                     }
-                    else{
-                        if(this.fastCooldown>0)
-                            this.fastCooldown-=5;
+                    else if(this.fastCooldown>20) {
+                        this.solved= true
+                    }
+                    if(this.fastCooldown>0) {
+                        this.fastCooldown-=2;
                     }
                     this.mousePastX=this.mouseCurrentX;
                     this.mousePastY=this.mouseCurrentY;
                 },
                 barMove: function(){
                     var elem = document.getElementById("myBar");   
-                    var id = setInterval(frame, 10);
-                    function frame() {
-                        if (barWidth >= 100) {
-                        clearInterval(id);
-                        } else {
-                        elem.style.width = barWidth + '%'; 
-                        }
-                    }
+                    elem.style.width = this.barWidth + '%'; 
+                    console.log("test1")
                 },
                 progress: function() {
                     window.location.href = 'index.html'
