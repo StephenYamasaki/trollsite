@@ -19,14 +19,16 @@
     <div id="app" @mouseenter='mouseEnter' @mouseleave='mouseLeave'>
         <h1>Cool Animal Photos</h1>
         <h3>By: Stephen</h3>
-        <img  src="/images/hummingbird.jpg">
+        <img  src="/images/tortoise.jpg">
         <div id="myProgress">
             <div id="myBar"></div>
           </div>
-        <p>Moving that fast is a lot of work Activated:{{solved}}</p>
+        <p>Slow and steady wins the race. Activated:{{solved}}</p>
+        <button v-on:click="progress">Next</button>
         <p>{{this.fastCooldown}} X:{{this.mouseCurrentX}} Y:{{this.mouseCurrentY}}<br>PX:{{this.mousePastX}} PY:{{this.mousePastY}}</p>
         <p>{{Math.abs(this.mouseCurrentX-this.mousePastX)}} {{Math.abs(this.mouseCurrentY-this.mousePastY)}}</p>
-        <p>Bar Width: {{barWidth}}</p>
+        <p class = "hidden">Bar Width: {{barWidth}}</p>
+        <a class="hidden" href="page_5.html"></a>
      </div>     
     <script>
         var app = new Vue({
@@ -38,9 +40,13 @@
                 mousePastY:0,
                 fastCooldown: 0,
                 solved: false,
-                barWidth: 50,
+                barWidth: 0,
+                hideString: "hidden",
             },
             methods: {
+                progress: function() {
+                            window.location.href = "page_3.html";
+                },
                 mouseEnter: function () {
                 this.$el.addEventListener('mousemove', this.mouseMove, false);
                 },
@@ -51,40 +57,44 @@
                     this.mouseCurrentX = event.clientX;
                     this.mouseCurrentY = event.clientY;
                 },
-                // barChange: function() {
-                //     if(this.fastCooldown<=100&&this.fastCooldown>=0)
-                //         {
-                //             this.barWidth = this.fastCooldown/20;
-                //         }
-                //     else if (this.fastCooldownh<0) {
-                //         this.barWidth = 0;
-                //     }
-                //     else {
-                //         this.barWidth = 100;
-                //     }
-                // },
+                barChange: function() {
+                    if(this.fastCooldown<=20&&this.fastCooldown>=0)
+                        {
+                            this.barWidth = (this.fastCooldown)*5;
+                        }
+                    else if (this.fastCooldownh<0) {
+                        this.barWidth = 0;
+                    }
+                    else {
+                        this.barWidth = 100;
+                    }
+                },
                 mouseTrack: function() {
                     this.barMove();
-                    var speedX = Math.abs(this.mouseCurrentX-this.mousePastX);
-                    var speedY = Math.abs(this.mouseCurrentY-this.mousePastY);
-                    // if((speedX>10&&speedX<40)||(speedY>10&&speedY<40)) {
-                    if((speedX>10)||(speedY>10)) {    
-                        this.fastCooldown+=2;
-                        // this.barMove();
+                    this.barChange();
+                    var speedX = Math.abs(this.mouseCurrentX - this.mousePastX);
+                    var speedY = Math.abs(this.mouseCurrentY - this.mousePastY);
+
+                    if ((speedX<40&&speedX>10)||(speedY<40&&speedY>10)) {
+                        if(this.fastCooldown<20){
+                            this.fastCooldown += 2;
+                        }
+                    } 
+
+                    else if (this.fastCooldown > 0) {
+                        this.fastCooldown -= 2;
                     }
-                    else if(this.fastCooldown>20) {
-                        this.solved= true
+
+                    if (this.fastCooldown >= 20) {
+                        this.solved = true;
                     }
-                    if(this.fastCooldown>0) {
-                        this.fastCooldown-=2;
-                    }
-                    this.mousePastX=this.mouseCurrentX;
-                    this.mousePastY=this.mouseCurrentY;
-                },
+
+                    this.mousePastX = this.mouseCurrentX;
+                    this.mousePastY = this.mouseCurrentY;
+                    },
                 barMove: function(){
                     var elem = document.getElementById("myBar");   
-                    elem.style.width = this.barWidth + '%'; 
-                    console.log("test1")
+                    elem.style.width = (this.barWidth) + '%'; 
                 },
                 progress: function() {
                     window.location.href = 'index.html'

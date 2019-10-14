@@ -19,6 +19,7 @@
         var app = new Vue({
             el: "#app",
             data: {
+                moving: false,
                 nextStyle: {
                     position:"absolute",
                     right: "10%",
@@ -44,9 +45,14 @@
                 back2Left:false,
             },
             methods: {
+                
+                activated: function() {
+                    
+                },
                 move: function() {
                     this.nextMove();
                     this.back1Move();
+                    this.back2Move();
                 },
                 nextMove: function() {
                     if(this.nextPosition<10||this.nextPosition>=90)
@@ -81,20 +87,8 @@
                     }
                 },
                 back2Move: function() {
-                    if(this.back2PositionY<10||this.back2PositionY>=110)
-                    {
-                        this.back2Up=!this.back2Up;
-                    }
-                    if(this.back1MovingUp)
-                    {
-                        this.back1Style.top = (this.back1Position + .5) + "%";
-                        this.back1Position+=.5;
-                    }
-                    else 
-                    {
-                        this.back1Style.top = (this.back1Position - .5) + "%";
-                        this.back1Position-=.5;
-                    }
+                    this.back2Style.right = this.back1Position*.8 + "%";
+                    this.back2Style.top = this.nextPosition + "%";
                 },
                 onLoad: function() {
                     setInterval(

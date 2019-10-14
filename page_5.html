@@ -1,0 +1,45 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel ="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <h1>Cool Animal Photos</h1>
+        <h3>By: PAGE 5 OMGOWNF</h3>
+        <button v-on:click=activate>Next</button>
+        <p>{{this.status}}</p>
+        <img class="smallImg" v-on:click="progress" src="/images/mantis.jpg">
+        <p>Hiding in plain sight can be quite effective.</p>
+        <a class="hidden" href="page_4.html"></a>
+    </div>
+    <script>
+            var app = new Vue({
+                el: "#app",
+                data:{
+                    buttonPressed: false,
+                    status: ""
+                },
+                methods: {
+                    activate: function() {
+                        this.buttonPressed = true;
+                        this.status="Buttons are overrated";
+                    },
+                    progress: function() {
+                        if(this.buttonPressed)
+                        {
+                            window.location.href = 'page_4.html';
+                        }
+                    },
+                    onLoad: function() {
+                    setInterval(
+                        300
+                    )
+                    }
+                },
+                created: function() {
+                }
+            })
+        </script>
+</body>
+</html>
