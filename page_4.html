@@ -24,10 +24,10 @@
             <div id="myBar"></div>
           </div>
         <p>Slow and steady wins the race. Activated:{{solved}}</p>
-        <button v-on:click="progress">Next</button>
+        <button v-on:click="next">Next</button>
         <p>{{this.fastCooldown}} X:{{this.mouseCurrentX}} Y:{{this.mouseCurrentY}}<br>PX:{{this.mousePastX}} PY:{{this.mousePastY}}</p>
         <p>{{Math.abs(this.mouseCurrentX-this.mousePastX)}} {{Math.abs(this.mouseCurrentY-this.mousePastY)}}</p>
-        <p class = "hidden">Bar Width: {{barWidth}}</p>
+        <p>Bar Width: {{barWidth}}</p>
         <a class="hidden" href="page_5.html"></a>
      </div>     
     <script>
@@ -44,8 +44,10 @@
                 hideString: "hidden",
             },
             methods: {
-                progress: function() {
-                            window.location.href = "page_3.html";
+                next: function() {
+                    if(this.solved) {
+                     window.location.href = "page_5.html";
+                    }
                 },
                 mouseEnter: function () {
                 this.$el.addEventListener('mousemove', this.mouseMove, false);
@@ -95,9 +97,6 @@
                 barMove: function(){
                     var elem = document.getElementById("myBar");   
                     elem.style.width = (this.barWidth) + '%'; 
-                },
-                progress: function() {
-                    window.location.href = 'index.html'
                 },
                 onLoad: function() {
                 setInterval(
