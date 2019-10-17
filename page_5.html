@@ -5,40 +5,58 @@
 </head>
 <body>
     <div id="app">
-        <h1>Cool Animal Photos</h1>
-        <h3>By: PAGE 5 OMGOWNF</h3>
-        <button v-on:click=activate>Next</button>
-        <p>{{this.status}}</p>
-        <img class="smallImg" v-on:click="progress" src="/images/mantis.jpg">
-        <p>Hiding in plain sight can be quite effective.</p>
-        <a class="hidden" href="page_4.html"></a>
+        <div v-on:mouseenter="mouseEnter" v-on:mouseleave="mouseLeave">
+            <h1>Cool Animal Photos</h1>
+            <h3>By: PAGE 5 OMGOWNF</h3>
+            <button class="transparent" v-bind:style="button1T" v-on:click=progress>Next</button>
+            <p>{{this.status}}</p>
+            <img class="smallImg" src="/images/birdhat.jpg">
+            <p>Task failed successfully</p>
+            <img class="cursor" id="cursor" v-bind:style="cursorStyle" src="/images/cursor.png"></img>
+            <a class="hidden" href="index.html"></a>
+        </div>  
     </div>
     <script>
             var app = new Vue({
                 el: "#app",
                 data:{
+                    sequence: 0,
                     buttonPressed: false,
-                    status: ""
+                    status: "",
+                    mouseCurrentX: 0,
+                    mouseCurrentY: 0,
+                    cursorStyle: {
+                    position:"absolute",
+                    left: "80%",
+                    top: "10%"
+                },
                 },
                 methods: {
-                    activate: function() {
-                        this.buttonPressed = true;
-                        this.status="Buttons are overrated";
-                    },
                     progress: function() {
-                        if(this.buttonPressed)
-                        {
+                        // if(this.buttonPressed)
+                        // {
                             window.location.href = 'page_4.html';
-                        }
+                        // }
                     },
-                    onLoad: function() {
-                    setInterval(
-                        300
-                    )
-                    }
+                    mouseEnter: function () {
+                    this.$el.addEventListener('mousemove', this.mouseMove, false);
+                    },
+                    mouseLeave: function() {
+                    this.$el.removeEventListener('mousemove', this.mouseMove);
+                    },
+                    mouseMove: function(event) {
+                        this.cursorStyle.left = Math.abs(window.innerWidth - event.clientX-8);
+                        this.cursorStyle.top = Math.abs(window.innerHeight - event.clientY-8);
+                        console.log("x" + event.clientX + "y" + event.clientY)
+                    },
+                    cursorMove: function() {
+
+                    },
                 },
-                created: function() {
-                }
+            created: function created()
+            {
+                this.onLoad();
+            }
             })
         </script>
 </body>

@@ -23,11 +23,8 @@
         <div id="myProgress">
             <div id="myBar"></div>
           </div>
-        <p>Slow and steady wins the race. Activated:{{solved}}</p>
+        <p>Slow and steady wins the race.</p>
         <button v-on:click="next">Next</button>
-        <p>{{this.fastCooldown}} X:{{this.mouseCurrentX}} Y:{{this.mouseCurrentY}}<br>PX:{{this.mousePastX}} PY:{{this.mousePastY}}</p>
-        <p>{{Math.abs(this.mouseCurrentX-this.mousePastX)}} {{Math.abs(this.mouseCurrentY-this.mousePastY)}}</p>
-        <p>Bar Width: {{barWidth}}</p>
         <a class="hidden" href="page_5.html"></a>
      </div>     
     <script>
@@ -84,7 +81,8 @@
                     } 
 
                     else if (this.fastCooldown > 0) {
-                        this.fastCooldown -= 2;
+                        if(!this.solved)
+                            this.fastCooldown -= 2;
                     }
 
                     if (this.fastCooldown >= 20) {

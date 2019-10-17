@@ -33,3 +33,10 @@ button{
 .smallImg {
     width: 32%;
 }
+.cursor {
+    max-height:15px;
+    max-width:10px;
+}
+.transparent{
+    opacity:0.0;
+}
