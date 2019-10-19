@@ -8,7 +8,7 @@
 #myBar {
   width: 1%;
   height: 30px;
-  background-color: #4CAF50;
+  background-color: blue;
 }
 </style>
 <head>
@@ -26,6 +26,7 @@
         <p>Slow and steady wins the race.</p>
         <button v-on:click="next">Next</button>
         <a class="hidden" href="page_5.html"></a>
+        <!-- <p>spX = {{Math.abs(this.mouseCurrentX - this.mousePastX)}} spY = {{Math.abs(this.mouseCurrentY - this.mousePastY)}}</p> -->
      </div>     
     <script>
         var app = new Vue({
@@ -69,12 +70,14 @@
                     }
                 },
                 mouseTrack: function() {
+                    const speedMax=50;
+                    const speedMin=10;
                     this.barMove();
                     this.barChange();
                     var speedX = Math.abs(this.mouseCurrentX - this.mousePastX);
                     var speedY = Math.abs(this.mouseCurrentY - this.mousePastY);
 
-                    if ((speedX<40&&speedX>10)||(speedY<40&&speedY>10)) {
+                    if ((speedX<speedMax&&speedMin>10)||(speedY<speedMax&&speedY>speedMin)) {
                         if(this.fastCooldown<20){
                             this.fastCooldown += 2;
                         }
@@ -82,7 +85,7 @@
 
                     else if (this.fastCooldown > 0) {
                         if(!this.solved)
-                            this.fastCooldown -= 2;
+                            this.fastCooldown -= 1;
                     }
 
                     if (this.fastCooldown >= 20) {

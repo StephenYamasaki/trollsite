@@ -5,10 +5,11 @@
 </head>
 <body>
     <div id="app">
-        <div v-on:mouseenter="mouseEnter" v-on:mouseleave="mouseLeave">
+        <div id="mouseDiv" v-on:mouseenter="mouseEnter" v-on:mouseleave="mouseLeave">
             <h1>Cool Animal Photos</h1>
             <h3>By: PAGE 5 OMGOWNF</h3>
-            <button class="transparent" v-bind:style="button1T" v-on:click=progress>Next</button>
+
+            <button v-bind:style="click1Style" v-on:click="()=>progress(1)">Next</button>
             <p>{{this.status}}</p>
             <img class="smallImg" src="/images/birdhat.jpg">
             <p>Task failed successfully</p>
@@ -26,17 +27,29 @@
                     mouseCurrentX: 0,
                     mouseCurrentY: 0,
                     cursorStyle: {
-                    position:"absolute",
-                    left: "80%",
-                    top: "10%"
-                },
+                        position:"absolute",
+                        left: "80%",
+                        top: "10%"
+                    },
+                    click1Style: {
+                        opacity:0.1,
+                        left:"80%",
+                        top: "50%",
+                        position: "absolute",
+                    },
                 },
                 methods: {
-                    progress: function() {
-                        // if(this.buttonPressed)
-                        // {
+                    progress: function(num) {
+                        if(num==1){
+                            sequence=1;
+
+                        }
+                        else if(num==2){
+
+                        }
+                        else if(num==3){
                             window.location.href = 'page_4.html';
-                        // }
+                        }
                     },
                     mouseEnter: function () {
                     this.$el.addEventListener('mousemove', this.mouseMove, false);
@@ -46,8 +59,8 @@
                     },
                     mouseMove: function(event) {
                         this.cursorStyle.left = Math.abs(window.innerWidth - event.clientX-8);
-                        this.cursorStyle.top = Math.abs(window.innerHeight - event.clientY-8);
-                        console.log("x" + event.clientX + "y" + event.clientY)
+                        this.cursorStyle.top = Math.abs(window.innerHeight - event.clientY+27);
+                        // console.log("x" + event.clientX + "y" + event.clientY)
                     },
                     cursorMove: function() {
 
@@ -55,7 +68,6 @@
                 },
             created: function created()
             {
-                this.onLoad();
             }
             })
         </script>
