@@ -23,17 +23,15 @@
         <p>{{this.hint}}</p>
         <button id="button1" v-bind:style="button1Style">Next</button>
         <button id="button2" v-bind:style="button2Style" v-on:click="next">Next</button>
-        <a class="hidden" href="page_5.html"></a>
-        <p>X:{{this.button2CenterX}} Y:{{this.button2CenterY}}</p>
-        <p>{{button2Close}}</p>
-        <p>hidden: {{this.hidden}}</p>
-        <p>found: {{this.found}}</p>
+        <a class="hidden" href="final.html"></a>
+        <p>{{this.hint2}}</p>
      </div>     
     <script>
         var app = new Vue({
             el: "#app",
             data:{
                 hint:"Be on the lookout for sneaky stuff.",
+                hint2:"",
                 mouseCurrentX: 100,
                 mouseCurrentY: 100,
                 hidden: false,
@@ -61,13 +59,13 @@
             methods: {
                 next: function() {
                     if(this.found)
-                        window.location.href = 'index.html';
+                        window.location.href = 'final.html';
                 },
                 mouseEnter: function () {
-                this.$el.addEventListener('mousemove', this.mouseMove, false);
+                    this.$el.addEventListener('mousemove', this.mouseMove, false);
                 },
                 mouseLeave: function() {
-                this.$el.removeEventListener('mousemove', this.mouseMove);
+                    this.$el.removeEventListener('mousemove', this.mouseMove);
                 },
                 mouseMove: function(event) {
                     this.button1ID = document.getElementById("button1");
@@ -91,7 +89,7 @@
                             if(this.button1Close<30){
                                 this.hidden = true;
                                 this.button1Style.opacity=0;
-                                this.hint="Where'd it go?";
+                                this.hint="Be on the lookout for sneaky stuff. Where'd it go?";
                             }
                         }
                         else 
@@ -113,22 +111,31 @@
                     }
 
                 },
+                hint: function(){
+                    
+                },
                 distance: function(x, y){
                     return Math.sqrt(Math.pow(Math.abs(x), 2) + Math.pow(Math.abs(y), 2));
                 },
-                mouseTrack: function() {
-                    // if ((this.mouseCurrentX)) {
-                    // } 
-                },
                 onLoad: function() {
-                setInterval(
-                    this.mouseTrack,
-                    200
-                )
-                }
+                    setTimeout(
+                        () => {
+                            this.hint2="Look with your cursor"
+                            setTimeout(
+                                () => {
+                                    this.hint2="Look with your cursor, top right"
+                                },
+                                15000
+                            )
+                        },
+                        10000
+                    )
+                    
+
+                }, 
             },
-            created: function() {
-                this.onLoad();
+        created: function() {
+            this.onLoad();
             }
         })
     </script>
