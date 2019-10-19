@@ -10,11 +10,16 @@
             <h3>By: PAGE 5 OMGOWNF</h3>
 
             <button v-bind:style="click1Style" v-on:click="()=>progress(1)">Next</button>
-            <p>{{this.status}}</p>
+            <button v-bind:style="click2Style" v-on:click="()=>progress(2)">Next</button>
+            <button v-bind:style="click3Style" v-on:click="()=>progress(3)">Next</button>
+            <button v-bind:style="display1Style">Next</button>
+            <button v-bind:style="display2Style">Next</button>
+            <button v-bind:style="display3Style">Next</button>
             <img class="smallImg" src="/images/birdhat.jpg">
             <p>Task failed successfully</p>
             <img class="cursor" id="cursor" v-bind:style="cursorStyle" src="/images/cursor.png"></img>
             <a class="hidden" href="index.html"></a>
+            <p>sequence {{this.sequence}}</p>
         </div>  
     </div>
     <script>
@@ -32,22 +37,58 @@
                         top: "10%"
                     },
                     click1Style: {
-                        opacity:0.1,
+                        opacity:0,
                         left:"80%",
                         top: "50%",
+                        position: "absolute",
+                    },
+                    click2Style: {
+                        opacity:0,
+                        left:"20%",
+                        top: "70%",
+                        position: "absolute",
+                    },
+                    click3Style: {
+                        opacity:0,
+                        left:"10%",
+                        top: "10%",
+                        position: "absolute",
+                    },
+                    display1Style: {
+                        opacity:1,
+                        left:"20%",
+                        top: "50%",
+                        position: "absolute",
+                    },
+                    display2Style: {
+                        opacity:0,
+                        left:"80%",
+                        top: "30%",
+                        position: "absolute",
+                    },
+                    display3Style: {
+                        opacity:0,
+                        left:"90%",
+                        top: "90%",
                         position: "absolute",
                     },
                 },
                 methods: {
                     progress: function(num) {
                         if(num==1){
-                            sequence=1;
-
+                            this.sequence=1;
+                            this.display1Style.opacity=0;
+                            this.display2Style.opacity=1;
                         }
                         else if(num==2){
-
+                            if(this.sequence==1) {
+                                this.sequence=2
+                                this.display2Style.opacity=0;
+                                this.display3Style.opacity=1;
+                            }
                         }
                         else if(num==3){
+                            if(this.sequence==2)
                             window.location.href = 'page_4.html';
                         }
                     },
@@ -58,7 +99,7 @@
                     this.$el.removeEventListener('mousemove', this.mouseMove);
                     },
                     mouseMove: function(event) {
-                        this.cursorStyle.left = Math.abs(window.innerWidth - event.clientX-8);
+                        this.cursorStyle.left = Math.abs(window.innerWidth - event.clientX+40);
                         this.cursorStyle.top = Math.abs(window.innerHeight - event.clientY+26);
                         // console.log("x" + event.clientX + "y" + event.clientY)
                     },
