@@ -7,7 +7,7 @@
     <div id="app">
         <div id="mouseDiv" v-on:mouseenter="mouseEnter" v-on:mouseleave="mouseLeave">
             <h1>Cool Animal Photos</h1>
-            <h3>By: PAGE 5 OMGOWNF</h3>
+            <h3>By: Stephen</h3>
 
             <button v-bind:style="click1Style" v-on:click="()=>progress(1)">Next</button>
             <button v-bind:style="click2Style" v-on:click="()=>progress(2)">Next</button>
@@ -15,11 +15,10 @@
             <button v-bind:style="display1Style">Next</button>
             <button v-bind:style="display2Style">Next</button>
             <button v-bind:style="display3Style">Next</button>
-            <img class="smallImg" src="/images/birdhat.jpg">
-            <p>Task failed successfully</p>
+            <img class="smallImg" src="/images/animalteam.jpg">
+            <p>Having a helping hand can be a nice thing.</p>
             <img class="cursor" id="cursor" v-bind:style="cursorStyle" src="/images/cursor.png"></img>
-            <a class="hidden" href="index.html"></a>
-            <p>sequence {{this.sequence}}</p>
+            <a class="hidden" href="page_6.html"></a>
         </div>  
     </div>
     <script>
@@ -89,7 +88,7 @@
                         }
                         else if(num==3){
                             if(this.sequence==2)
-                            window.location.href = 'page_4.html';
+                            window.location.href = 'page_6.html';
                         }
                     },
                     mouseEnter: function () {

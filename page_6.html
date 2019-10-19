@@ -1,0 +1,136 @@
+<html>
+<style>
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+}
+
+#myBar {
+  width: 1%;
+  height: 30px;
+  background-color: blue;
+}
+</style>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel ="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app" @mouseenter='mouseEnter' @mouseleave='mouseLeave'>
+        <h1>Cool Animal Photos</h1>
+        <h3>By: Stephen</h3>
+        <img  src="/images/meercats.jpg">
+        <p>{{this.hint}}</p>
+        <button id="button1" v-bind:style="button1Style">Next</button>
+        <button id="button2" v-bind:style="button2Style" v-on:click="next">Next</button>
+        <a class="hidden" href="page_5.html"></a>
+        <p>X:{{this.button2CenterX}} Y:{{this.button2CenterY}}</p>
+        <p>{{button2Close}}</p>
+        <p>hidden: {{this.hidden}}</p>
+        <p>found: {{this.found}}</p>
+     </div>     
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data:{
+                hint:"Be on the lookout for sneaky stuff.",
+                mouseCurrentX: 100,
+                mouseCurrentY: 100,
+                hidden: false,
+                found: false,
+                button1Box: {top:0, left:0, right:0, bottom:0},
+                button1ID: null,
+                button1CenterX:0,
+                button1CenterY:0,
+                button1Close:400,
+                button1Style: {
+                    opacity:1.0,
+                },
+                button2Box: {top:0, left:0, right:0, bottom:0},
+                button2ID: null,
+                button2CenterX:0,
+                button2CenterY:0,
+                button2Close:0,
+                button2Style: {
+                        opacity:0,
+                        left:"90%",
+                        top: "20%",
+                        position: "absolute",
+                    },
+            },
+            methods: {
+                next: function() {
+                    if(this.found)
+                        window.location.href = 'index.html';
+                },
+                mouseEnter: function () {
+                this.$el.addEventListener('mousemove', this.mouseMove, false);
+                },
+                mouseLeave: function() {
+                this.$el.removeEventListener('mousemove', this.mouseMove);
+                },
+                mouseMove: function(event) {
+                    this.button1ID = document.getElementById("button1");
+                    this.button2ID = document.getElementById("button2");
+                    this.mouseDist();
+                    this.button1Box = this.button1ID.getBoundingClientRect();
+                    this.button2Box = this.button2ID.getBoundingClientRect();
+
+                    this.mouseCurrentX = event.clientX;
+                    this.mouseCurrentY = event.clientY;
+                },
+                mouseDist: function() {
+                    this.button1CenterX = (this.button1Box.left+this.button1Box.right)/2;
+                    this.button1CenterY = (this.button1Box.top+this.button1Box.bottom)/2;
+                    this.button2CenterX = (this.button2Box.left+this.button2Box.right)/2;
+                    this.button2CenterY = (this.button2Box.top+this.button2Box.bottom)/2;
+                    if(!this.hidden) {
+                        this.button1Close = this.distance(this.mouseCurrentX-this.button1CenterX, this.mouseCurrentY-this.button1CenterY);
+                        if(this.button1Close<= 100) {
+                            this.button1Style.opacity = this.button1Close/400;
+                            if(this.button1Close<30){
+                                this.hidden = true;
+                                this.button1Style.opacity=0;
+                                this.hint="Where'd it go?";
+                            }
+                        }
+                        else 
+                        this.button1Style.opacity = 1;
+                    }
+                    else{
+                        if(!this.found){
+                            this.button2Close = this.distance(this.mouseCurrentX-this.button2CenterX, this.mouseCurrentY-this.button2CenterY);
+                            if(this.button2Close<= 100) {
+                                this.button2Style.opacity = 1/(this.button2Close/10);
+                                if(this.button2Close<20){
+                                    this.found = true;
+                                    this.button2Style.opacity=1;
+                                }
+                            }
+                            else
+                                this.button2Style.opacity=0
+                        }
+                    }
+
+                },
+                distance: function(x, y){
+                    return Math.sqrt(Math.pow(Math.abs(x), 2) + Math.pow(Math.abs(y), 2));
+                },
+                mouseTrack: function() {
+                    // if ((this.mouseCurrentX)) {
+                    // } 
+                },
+                onLoad: function() {
+                setInterval(
+                    this.mouseTrack,
+                    200
+                )
+                }
+            },
+            created: function() {
+                this.onLoad();
+            }
+        })
+    </script>
+</body>
+</html>
